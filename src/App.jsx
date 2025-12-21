@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import './App.css'
 import ProductCardList from './components/ProductComponent';
+import LoadingComponent from './components/LoadingComponent';
+import NavbarComponent from './components/navigations/NavbarComponent';
 
 function App() {
 
@@ -11,6 +13,7 @@ function App() {
 
   // handleOnFetching Data from API 
   useEffect(() => {
+
     async function FetchingData() {
       const res = await fetch('https://api.escuelajs.co/api/v1/products');
       const data = await res.json();
@@ -19,24 +22,37 @@ function App() {
       setProducts(data);
       return data;
     }
+
     FetchingData();
-  },[])
+
+  }, [])
 
   return (
-    <div className='grid grid-cols-4 gap-8 p-4 '>
-      {
-         products.map((pro)=>(
-            <ProductCardList
-              key={pro?.id} //using for remark as difference unique components
-              title={pro.title}
-              description={pro.description}
-              price={pro.price}
-              image={pro?.images[0]}
-            />
-         ))
-      }
-     
-    </div>
+    <>
+    {/* add navbarnavigation */}
+
+       <NavbarComponent/>
+       
+       {/* render product cards */}
+      <div className='grid grid-cols-4 gap-8 p-4 '>
+        {/* <LoadingComponent/> */}
+        {/* added suspense  */}
+        <Suspense fallback={<LoadingComponent />}>
+          {
+            products.map((pro) => (
+              <ProductCardList
+                key={pro?.id} //using for remark as difference unique components
+                title={pro.title}
+                description={pro.description}
+                price={pro.price}
+                image={pro?.images[0]}
+              />
+            ))
+          }
+        </Suspense>
+      </div>
+    </>
+
   )
 }
 export default App

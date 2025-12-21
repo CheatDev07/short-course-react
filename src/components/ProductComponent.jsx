@@ -9,6 +9,7 @@ export default function ProductCardList({image, title, description, price}) {
                         className="object-cover h-64 w-full"
                         src={image}
                         alt="Converse sneakers"
+                        loading="lazy"
                     />
                 </div>
                 <div className="flex flex-col gap-1 mt-4 px-4">
