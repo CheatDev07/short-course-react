@@ -1,69 +1,41 @@
+import { useEffect, useState } from 'react'
 import './App.css'
-import ProductCardList from './components/ProductComponent'
+import ProductCardList from './components/ProductComponent';
 
 function App() {
 
-  // define data list
-  const dataList = [
-    {
-      "title": "Sleek Modern Laptop for Professionals",
-      "price": 97,
-      "description": "Experience cutting-edge technology and elegant design with our latest laptop model. Perfect for professionals on-the-go, this high-performance laptop boasts a powerful processor, ample storage, and a long-lasting battery life, all encased in a lightweight, slim frame for ultimate portability. Shop now to elevate your work and play.",
-      "images": [
-        "https://i.imgur.com/ItHcq7o.jpeg",
-        "https://i.imgur.com/55GM3XZ.jpeg",
-        "https://i.imgur.com/tcNJxoW.jpeg"
-      ]
-    },
-    {
+  //const [state, setState] = useState(0); // initializevalue = 0
+  const [products, setProducts] = useState([]);
 
-      "title": "Stylish Red & Silver Over-Ear Headphones",
-      "price": 39,
-      "description": "Immerse yourself in superior sound quality with these sleek red and silver over-ear headphones. Designed for comfort and style, the headphones feature cushioned ear cups, an adjustable padded headband, and a detachable red cable for easy storage and portability. Perfect for music lovers and audiophiles who value both appearance and audio fidelity.",
-      "images": [
-        "https://i.imgur.com/YaSqa06.jpeg",
-        "https://i.imgur.com/isQAliJ.jpeg",
-        "https://i.imgur.com/5B8UQfh.jpeg"
-      ]
-    },
-    {
-      "title": "Sleek Mirror Finish Phone Case",
-      "price": 27,
-      "description": "Enhance your smartphone's look with this ultra-sleek mirror finish phone case. Designed to offer style with protection, the case features a reflective surface that adds a touch of elegance while keeping your device safe from scratches and impacts. Perfect for those who love a minimalist and modern aesthetic.",
+  // getter, setter 
 
-      "images": [
-        "https://i.imgur.com/yb9UQKL.jpeg",
-        "https://i.imgur.com/m2owtQG.jpeg",
-        "https://i.imgur.com/bNiORct.jpeg"
-      ]
-    },
-    {
+  // handleOnFetching Data from API 
+  useEffect(() => {
+    async function FetchingData() {
+      const res = await fetch('https://api.escuelajs.co/api/v1/products');
+      const data = await res.json();
+      console.log("the whole data: ", data)
+      // const titleFromAPI = data.map(data => data.title);
+      setProducts(data);
+      return data;
+    }
+    FetchingData();
+  },[])
 
-      "title": "Sleek Smartwatch with Vibrant Display",
-      "price": 16,
-      "description": "Experience modern timekeeping with our high-tech smartwatch, featuring a vivid touch screen display, customizable watch faces, and a comfortable blue silicone strap. This smartwatch keeps you connected with notifications and fitness tracking while showcasing exceptional style and versatility.",
-
-      "images": [
-        "https://i.imgur.com/LGk9Jn2.jpeg",
-        "https://i.imgur.com/1ttYWaI.jpeg",
-        "https://i.imgur.com/sPRWnJH.jpeg"
-      ]
-    }]
   return (
-    <div className='grid grid-cols-4 gap-4 p-4 m-8'>
+    <div className='grid grid-cols-4 gap-8 p-4 '>
       {
-        dataList.map((data)=>{
-           return (
-              // calling ProductCardList 
-               <ProductCardList
-                image={data.images[0]}
-                title={data.title}
-                description={data.description}
-                price={data.price}
-              />
-           )
-        })
+         products.map((pro)=>(
+            <ProductCardList
+              key={pro?.id} //using for remark as difference unique components
+              title={pro.title}
+              description={pro.description}
+              price={pro.price}
+              image={pro?.images[0]}
+            />
+         ))
       }
+     
     </div>
   )
 }

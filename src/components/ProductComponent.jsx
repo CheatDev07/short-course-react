@@ -1,7 +1,7 @@
 
 export default function ProductCardList({image, title, description, price}) {
     return (
-        <div className="h-screen w-full flex items-center justify-center  bg-gray-200 dark:bg-gray-800">
+        <div className="h-screen w-full flex items-center justify-center   dark:bg-gray-800">
             {/* product card */}
             <article className="max-w-sm w-full bg-white rounded-lg shadow-lg overflow-hidden dark:bg-gray-700">
                 <div>
