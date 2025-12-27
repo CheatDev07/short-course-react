@@ -7,29 +7,65 @@ import App from './App'
 import AboutPage from './pages/About'
 import ContactPage from './pages/Contact'
 import NotFoundPage from './pages/NotFound'
+import DetailProduct from './components/ProductDetail'
+import ErrorPage from './components/navigations/ErrorPage'
+import DetailPage from './pages/Detail'
+import MainLayout from './layout'
 
 const router = createBrowserRouter([
+  // add layout
   {
+
     path: '/',
-    element: <App/>
-  },
-  {
-    path:'/about',
-    element:<AboutPage/>
-  },
-  {
-    path:'/contact',
-    element: <ContactPage/>
-  },
-  {
-    path: '*',
-    element: <NotFoundPage/>
+    element: <MainLayout />,
+    children: [
+      {
+        path: '/',
+        element: <App />
+      },
+      {
+        path: '/about',
+        element: <AboutPage />
+      },
+      {
+        path: '/contact',
+        element: <ContactPage />
+      },
+      // dynamic segment
+      {
+        path: '/product/:proId',
+        element: <DetailPage />,
+        // errorElement: <ErrorPage />,
+        // loader: async ({ params }) => {
+        //   const res = await fetch(`https://api.escuelajs.co/api/v1/products/${params.id}`);
+        //   if (!res.ok) {
+        //     throw new Error("Product not found");
+        //   }
+        //   if(res.ok){
+        //        const data = await res.json();
+        //        <DetailProduct
+        //           title={data.title}
+        //           desc={data?.description}
+        //           image={data?.images[0] || ''}
+        //           price={data?.price}
+        //        />
+        //   }
+        //   return res.json();
+        // }
+      },
+      {
+        path: '*',
+        element: <NotFoundPage />
+      }
+
+    ]
   }
+
 ])
 
 createRoot(document.getElementById('root')).render(
   // <StrictMode>
   //   <App />
   // </StrictMode>,
-  <RouterProvider router={router}/>
+  <RouterProvider router={router} />
 )

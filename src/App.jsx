@@ -29,10 +29,7 @@ function App() {
 
   return (
     <>
-    {/* add navbarnavigation */}
 
-       <NavbarComponent/>
-       
        {/* render product cards */}
       <div className='grid grid-cols-4 gap-8 p-4 '>
         {/* <LoadingComponent/> */}
@@ -42,6 +39,7 @@ function App() {
             products.map((pro) => (
               <ProductCardList
                 key={pro?.id} //using for remark as difference unique components
+                id={pro?.id}
                 title={pro.title}
                 description={pro.description}
                 price={pro.price}

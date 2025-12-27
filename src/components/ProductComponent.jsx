@@ -1,9 +1,11 @@
+import { Link } from "react-router-dom";
 
-export default function ProductCardList({image, title, description, price}) {
+export default function ProductCardList({image, title, description, price,id}) {
     return (
         <div className="h-screen w-full flex items-center justify-center   dark:bg-gray-800">
             {/* product card */}
-            <article className="max-w-sm w-full bg-white rounded-lg shadow-lg overflow-hidden dark:bg-gray-700">
+            <Link to={`/product/${id}`}>
+                   <article className="max-w-sm w-full bg-white rounded-lg shadow-lg overflow-hidden dark:bg-gray-700">
                 <div>
                     <img
                         className="object-cover h-64 w-full"
@@ -60,6 +62,8 @@ export default function ProductCardList({image, title, description, price}) {
                     </button>
                 </div>
             </article>
+            </Link>
+        
         </div>
 
     )
